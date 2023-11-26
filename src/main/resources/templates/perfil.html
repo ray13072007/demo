@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie.edge">
+    <script src="https://kit.fontawesome.com/d37c5443c6.js" crossorigin="anonymous"></script>
+    <title>Aula 09 - Portfolio</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap");
+
+        :root {
+            --bg-color: #640000;
+            --bg-card: #f4f4f4;
+            --font-color: #1c1c1c;
+            --font-highlight: #bd93f9;
+        }
+
+        /*===== Body =====*/
+
+        body {
+            background-image: url(novo.jpg);
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .centered {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            width: 1100px;
+            background: var(--bg-card);
+            color: var(--title-color);
+            padding: 3rem;
+            border-radius: 40px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 4);
+            display: block;
+            background: #AAD3FF;
+        }
+
+        /*===== Header =====*/
+
+        .perfil {
+            display: flex;
+            align-items: center;
+        }
+
+        .title {
+            margin-left: 1rem;
+        }
+
+        .title h1 {
+            font-weight: bolder;
+            font-size: 1.8rem;
+        }
+
+        .title h3 {
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        .title p {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: #949494;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Balão flutuante */
+        .floating-balloon {
+            position: absolute;
+            background: #000000;
+            border: 1px solid #000;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            display: none;
+            top: 250px;
+            left: 20%;
+            transform: translateX(-70%);
+            color: white;
+        }
+
+        /* Estilos dos botões */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 300px;
+            display: inline-block;
+            padding: 10px;
+            background-color: #094688;
+            color: white;
+            border: 2px solid #094688;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Adicionado estilo para o hover do botão Ver perfil */
+        #perfilButton:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estilos da nav-link (mantém o fundo branco) */
+        a.nav-link.active {
+            width: 300px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: white;
+            color: #000000;
+            border: 2px solid #094688 ;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Adicionado estilo para o hover da nav-link */
+        a.nav-link.active:hover {
+            background: linear-gradient(60deg,#ffffff,#094688 );
+            color: #094688;
+        }
+
+        #resumoBalloon {
+            position: absolute;
+            background: linear-gradient(-45deg, #4C86C4,#094688,#e6b86b );
+            border: 1px solid #000;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            display: none;
+            top: 250px;
+            left: 48%;
+            transform: translateX(-50%);
+            color: white;
+        }
+
+        /* Removido hover desnecessário para o botão Ver resumo */
+        #resumoBalloon.active {
+            display: block;
+        }
+
+        #resumoTextArea {
+            width: 98%; /* Aumentado para 100% para ocupar a largura do balão */
+              height: 150px;
+            margin-bottom: 10px;
+            resize: none; /* Adicionado para desativar a capacidade de redimensionar */
+        }
+
+        .button-container-text {
+            display: flex;
+            justify-content: center; /* Centralizado o botão */
+            margin-top: 10px;
+        }
+
+        .save-button {
+           background-color: #000;
+            color: white;
+            border: 4px solid #000;
+            border-radius: 5px;
+            padding: 8px; /* Diminuído o padding do botão */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container centered">
+    <header class="perfil">
+        <div class="perfil-image">
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="120" fill="currentColor"
+                     class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path
+                            d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                    <path fill-rule="evenodd"
+                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                </svg>
+            </div>
+        </div>
+        <div class="title">
+            <h1>nome do usuário</h1>
+            <p>email</p>
+            <p>telefone</p>
+        </div>
+    </header>
+
+    <main class="projetos client-card">
+        <!-- Conteúdo do cliente ou tabela aqui -->
+    </main>
+
+    <div class="button-container">
+        <!-- Botão "Ver perfil" com a largura especificada -->
+        <div class="button-container">
+            <a class="nav-link active" aria-current="page" href="/investimentos"> Carteira De Investimentos</a>
+        </div>
+
+        <!-- Botão "Ver resumo" -->
+        <button id="resumoButton">Ver resumo</button>
+        <div class="floating-balloon" id="resumoBalloon">
+            <!-- Conteúdo do resumo aqui -->
+            <textarea id="resumoTextArea" rows="4" cols="50"></textarea>
+            <div class="button-container-text">
+                <button class="save-button" id="saveButton">Atualizar Resumo</button>
+            </div>
+            <!-- Adicione mais informações conforme necessário -->
+        </div>
+
+        <!-- Botão "Carteira Virtual" -->
+        <div class="button-container">
+            <a class="nav-link active" aria-current="page" href="/carteira"> Carteira Virtual</a>
+        </div>
+    </div>
+
+    <script>
+        const perfilButton = document.getElementById("perfilButton");
+        const profileBalloon = document.getElementById("profileBalloon");
+        const resumoButton = document.getElementById("resumoButton");
+        const resumoBalloon = document.getElementById("resumoBalloon");
+        const saveButton = document.getElementById("saveButton");
+        const resumoTextArea = document.getElementById("resumoTextArea");
+
+
+        // Adicionado evento de clique para mostrar/ocultar o balão de resumo
+        resumoButton.addEventListener("click", () => {
+            resumoBalloon.style.display = (resumoBalloon.style.display === "block") ? "none" : "block";
+        });
+
+        // Adicionado evento de mouseover para mostrar o balão de perfil
+        perfilButton.addEventListener("mouseover", () => {
+            profileBalloon.style.display = "block";
+        });
+
+        // Adicionado evento de mouseout para ocultar o balão de perfil
+        perfilButton.addEventListener("mouseout", () => {
+            profileBalloon.style.display = "none";
+        });
+
+        // Adicionado evento de clique para mostrar o botão de salvar ao editar o texto
+        resumoTextArea.addEventListener("input", () => {
+            saveButton.style.display = "block";
+        });
+
+        // Adicionado evento de clique para salvar as alterações no texto e ocultar o balão
+        saveButton.addEventListener("click", () => {
+            resumoBalloon.style.display = "none"; // Oculta o balão ao clicar no botão de salvar
+
+            // Adicione a lógica para notificação aqui
+            alert("Atualização realizada com sucesso!");
+        });
+    </script>
+</div>
+</body>
+
+</html>

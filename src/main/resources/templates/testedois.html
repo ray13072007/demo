@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor Anual e Mensal</title>
+</head>
+<body>
+
+<h2>Conversor Anual e Mensal</h2>
+
+<form id="conversorForm">
+    <label for="valor">Digite o valor:</label>
+    <input type="number" id="valor" step="any" oninput="limparResultado()" required>
+    <button type="button" onclick="converterAnualParaMensal()">Converter para Mensal</button>
+    <button type="button" onclick="converterMensalParaAnual()">Converter para Anual</button>
+</form>
+
+<p id="resultado"></p>
+
+<script>
+    function converterAnualParaMensal() {
+        // Obtém o valor do input
+        var valor = parseFloat(document.getElementById("valor").value);
+
+        // Verifica se o valor inserido é válido
+        if (isNaN(valor)) {
+            alert("Por favor, insira um valor numérico válido.");
+            return;
+        }
+
+        // Calcula o valor mensal sem arredondamento
+        var valorMensal = (valor / 12).toPrecision(15);
+
+        // Exibe o resultado
+        document.getElementById("resultado").innerHTML = "O valor mensal é: " + valorMensal;
+
+        // Atualiza o valor no campo de entrada
+        document.getElementById("valor").value = valorMensal;
+    }
+
+    function converterMensalParaAnual() {
+        // Obtém o valor do input
+        var valor = parseFloat(document.getElementById("valor").value);
+
+        // Verifica se o valor inserido é válido
+        if (isNaN(valor)) {
+            alert("Por favor, insira um valor numérico válido.");
+            return;
+        }
+
+        // Calcula o valor anual sem arredondamento
+        var valorAnual = (valor * 12).toPrecision(15);
+
+        // Exibe o resultado
+        document.getElementById("resultado").innerHTML = "O valor anual é: " + valorAnual;
+
+        // Atualiza o valor no campo de entrada
+        document.getElementById("valor").value = valorAnual;
+    }
+
+    function limparResultado() {
+        // Limpa o conteúdo do resultado quando o usuário insere um novo valor
+        document.getElementById("resultado").innerHTML = "";
+    }
+</script>
+
+</body>
+</html>

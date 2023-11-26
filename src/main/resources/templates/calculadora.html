@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Calculadoras de Juros</title>
+    <style>
+        body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('novo.jpg');
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 35px;
+        padding: 50px;
+        border: 5px solid;
+        border-radius: 20px;
+        border-image: linear-gradient(30deg, #4C86C4, #094688, #e6b86b) 1;
+        color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        transition: border-image 0.3s;
+    }
+
+    .container:hover {
+        border-image: linear-gradient(30deg,#e6b86b,#094688,#4C86C4) 1;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: border-color 0.3s;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+        border-color: #4CAF50;
+    }
+
+    input[type="submit"] {
+        padding: 12px;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+
+.result {
+    margin-top: 20px;
+    font-weight: bold;
+    padding: 15px;
+    color: #ffffff;
+    text-align: center;
+    border: 2px solid transparent;
+    border-image: linear-gradient(-45deg, #4C86C4,#094688,#e6b86b ) 1;
+    border-image-slice: 1;
+    transition: border 0.5s ease-in-out;
+}
+
+.result.calculated {
+    background-color: #4CAF50;
+    color: white;
+    border-image: linear-gradient(30deg, #e6b86b, #094688, #4C86C4) 1;
+    border-image-slice: 1;
+    transition: border 0.5s ease-in-out;
+}
+
+.result:hover {
+}
+
+.result.calculated:hover {
+    border-color: #4CAF50;
+}
+    </style>
+</head>
+
+<body>
+
+<!-- Calculadora de Juros Simples -->
+<div class="container">
+    <h1>Calculadora de Juros Simples</h1>
+    <form id="jurosSimplesForm">
+        <div class="form-group">
+            <label for="montante">Valor principal:</label>
+            <input type="text" id="montante">
+        </div>
+
+        <div class="form-group">
+            <label for="taxa">Taxa de juros:</label>
+            <input type="text" id="taxa">
+
+            <!-- Adição do campo para escolher entre taxa anual e mensal -->
+            <select id="tipoTaxa" onchange="converterTaxa()">
+                <option value="anual">Anual</option>
+                <option value="mensal">Mensal</option>
+            </select>
+</div>
+
+        <div class="form-group">
+            <label for="tempo">Tempo:</label>
+            <input type="number" id="tempo">
+                <select id="tipoTempo" onchange="converterTempo()">
+                    <option value="anual">Anual</option>
+                    <option value="mensal">Mensal</option>
+                </select>
+            </div>
+    </form>
+</div>
+
+        <div class="form-group">
+            <button type="button" onclick="calcularJurosSimples('S')">Calcular</button>
+        </div>
+    </form>
+    <span id="resultadoJurosSimples" class="result"></span>
+</div>
+
+
+<!-- Calculadora de Juros Compostos -->
+<div class="container">
+    <h1>Calculadora de Juros Compostos</h1>
+    <form id="jurosCompostosForm">
+        <div class="form-group">
+            <label for="montanteC">Valor Inicial:</label>
+            <input type="number" id="montanteC" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <div class="input-container">
+                <label for="aporteC">Aporte Mensal</label>
+                <input type="number" id="aporteC">
+            </div>
+
+            <label for="taxaC">Taxa de Juros:</label>
+            <input type="number" id="taxaC" step="0.01" required>
+
+            <!-- Adição do campo para escolher entre taxa anual e mensal -->
+        </div>
+
+        <div class="form-group">
+            <label for="tempoC">Tempo:</label>
+            <input type="number" id="tempoC" step="1" required>
+
+            <!-- Adição do campo para escolher entre tempo anual e mensal -->
+        </div>
+
+        <div class="form-group">
+            <button type="button" onclick="calcularJurosComposto('C')">Calcular</button>
+        </div>
+    </form>
+    <div id="resultadoJurosCompostos" class="result"></div>
+</div>
+<script>
+    var jurosAcumulado = 0;
+  var jurosAcumuladoC = 0;
+
+  function calcularJurosSimples(tipoJurosS) {
+   converterTaxa();
+    converterTempo();
+      // Obtem os valores
+      var montante = parseFloat(document.getElementById('montante').value);
+      var taxa = parseFloat(document.getElementById('taxa').value);
+      var tempo = parseFloat(document.getElementById('tempo').value);
+       var tipoTaxa = document.getElementById('tipoTaxa').value;
+        var tipoTempo = document.getElementById('tipoTempo').value;
+
+      for (let i = 0; i < tempo; i++) {
+          if (tipoJurosS === 'S') {
+              var juros = montante * (taxa / 100);
+              jurosAcumulado += juros;
+          }
+      }
+
+      var resultadoElement = null;
+
+      if (tipoJurosS === 'S') {
+          resultadoElement = document.getElementById('resultadoJurosSimples');
+          resultadoElement.innerText = "Total: " + (montante + jurosAcumulado);
+      }
+  }
+
+  function calcularJurosComposto(tipoJurosC) {
+      // Obtem os valores
+      var montanteC = parseFloat(document.getElementById('montanteC').value);
+      var aporteC = parseFloat(document.getElementById('aporteC').value);
+      var taxaC = parseFloat(document.getElementById('taxaC').value);
+      var tempoC = parseFloat(document.getElementById('tempoC').value);
+
+      for (let i = 0; i < tempoC; i++) {
+          if (tipoJurosC === 'C') {
+              var jurosC = montanteC * (taxaC / 100);
+              jurosAcumuladoC += jurosC;
+              montanteC += jurosC + aporteC;
+          }
+      }
+
+      var resultadoElement = null;
+
+      if (tipoJurosC === 'C') {
+          resultadoElement = document.getElementById('resultadoJurosCompostos');
+          resultadoElement.innerText = "Total: " + montanteC;
+      }
+  }
+ // Função para converter taxa imediatamente ao selecionar entre mensal e anual
+ function converterTaxa() {
+     var tipoTaxa = document.getElementById('tipoTaxa').value;
+     let taxa = parseFloat(document.getElementById('taxa').value);
+
+     // Se a taxa for mensal, converter para anual
+       if (tipoTaxa === 'anual') {
+        taxa *= 12;
+       } else {
+         // Se a taxa for anual, converter para mensal
+         taxa /= 12;
+     }
+
+        // Atualizar o valor da taxa no campo
+      document.getElementById('taxa').value = taxa;
+ }
+
+ // Função para converter tempo imediatamente ao selecionar entre mensal e anual
+ function converterTempo() {
+     var tipoTempo = document.getElementById('tipoTempo').value;
+     var tempoAnos = parseFloat(document.getElementById('tempo').value);
+
+     // Se o tempo for mensal, converter para mensal
+     if (tipoTempo === 'mensal') {
+         tempoAnos *= 12;
+     } else {
+         // Se o tempo for anual, converter para anual
+         tempoAnos /= 12;
+     }
+
+       // Atualizar o valor do tempo no campo
+      document.getElementById('tempo').value = tempoAnos.toFixed(2);
+ }
+</script>
+</body>
+</html>

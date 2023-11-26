@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <style>
+        body {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     min-height: 100vh;
+     margin: 0;
+     background-image: url('novo.jpg');
+ }
+.logo {
+    margin: 8px; /* Ajuste a margem conforme necessário */
+    height: 60px; /* Ajuste a altura conforme necessário */
+}
+
+.navigation {
+    width: 100%;
+    padding: 6px 5px; /* Ajuste o padding conforme necessário */
+    position: fixed;
+    top: 0;
+    left: 0; /* Garante que a barra comece do canto esquerdo */
+    z-index: 1000;
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navigation a.btn {
+    text-decoration: none;
+    color: #FFFFFF;
+    margin: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Adicionei uma classe para o botão Home */
+.navigation #confirmHomeButton {
+    margin-left: auto; /* Isso coloca o botão Home no canto direito */
+}
+
+        .navigation a.btn:hover {
+            text-decoration: none;
+            color: #4C86C4;
+            border-bottom: 2px solid #094688;
+        }
+
+.navigation a.btn::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+   background: linear-gradient(-45deg, #4C86C4,#094688,#e6b86b );
+    border-radius: 8px 8px 0 0; /* Borda superior arredondada */
+    transform-origin: center top;
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.navigation a.btn:hover::before {
+    transform: scaleX(1);
+}
+
+.square {
+    width: 250px;
+    height: 400px;
+    background: linear-gradient(-45deg, #4C86C4,#094688,#e6b86b );
+    margin: 20px 10px; /* Ajusta a margem */
+    border-radius: 15px;
+    transition: box-shadow 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px; /* Aumenta o tamanho da fonte */
+    font-weight: bold; /* Deixa o texto mais negrito */
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 4); /* Sombreado mais escuro */
+    position: relative;
+    font-family: 'Baskerville', serif; /* Corrige o nome da fonte */
+}
+
+.square:hover {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 4); /* Aumenta o sombreado no hover */
+}
+
+
+ .title {
+     font-size: 28px; /* Increased font size */
+     margin-bottom: 20px;
+ }
+
+ .icon {
+     width: 100px;
+     height: 80px;
+ }
+
+ .square:not(:last-child) {
+     margin-right: 20px; /* Adjusted margin */
+ }
+
+ .square-container {
+     margin-top: 150px; /* Adjusted margin-top */
+     display: flex;
+     justify-content: center;
+ }
+ .confirmation-card {
+    display: none;
+    position: fixed;
+    top: 14%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(30deg, #ffffff,#094688 );
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1002; /* Increase the z-index value */
+    border: 2px solid #4C86C4; /* Add this line for the blue border */
+}
+
+.confirmation-card p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.confirmation-card button {
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #3085d6;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.confirmation-card button:hover {
+    background-color: #1f4d7a;
+}
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navigation">
+        <img src="ReyKash.png" alt="" class="logo">
+        <a class="btn btn-link" id="confirmHomeButton">Home</a>
+    </nav>
+</header>
+<div class="square-container">
+
+<div class="square">
+    <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="80" fill="#FFC970" class="bi bi-wallet2"
+             viewBox="0 0 16 16">
+            <path
+                    d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z"/>
+        </svg>
+    </div>
+    <a class="nav-link active" aria-current="page" href="/carteira"> Carteira Virtual</a>
+</div>
+<div class="square">
+    <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="80" fill="#FFC970" class="bi bi-calculator"
+             viewBox="0 0 16 16">
+            <path
+                    d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+            <path
+                    d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-4z"/>
+        </svg>
+    </div>
+    <a class="nav-link active" aria-current="page" href="/calculadora"> Calculadora de juros</a>
+</div>
+<div class="square">
+    <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="80" fill="#FFC970" class="bi bi-chat-left-dots"
+             viewBox="0 0 16 16">
+            <path
+                    d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+    </div>
+    <a class="nav-link active" aria-current="page" href="/chat"> Chat</a>
+
+</div>
+<div class="square">
+    <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="80" fill="#FFC970" class="bi bi-coin" viewBox="0 0 16 16" >
+            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"/>
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+        </svg>
+    </div>
+    <a class="nav-link active" aria-current="page" href="/investimentos"> Investimentos</a>
+</div>
+    <div class="confirmation-card" id="confirmationCard">
+        <p>Deseja realmente voltar ao início?</p>
+        <button onclick="confirmHome()">Sim</button>
+        <button onclick="cancelHome()">Não</button>
+    </div>
+</div>
+<script>
+    // Função para exibir o card de confirmação
+    function showConfirmationCard() {
+        document.getElementById('confirmationCard').style.display = 'block';
+    }
+
+    // Função para confirmar o retorno ao início
+    function confirmHome() {
+        window.location.href = "/login"; // Altere para o URL correto
+    }
+
+    // Função para cancelar o retorno ao início
+    function cancelHome() {
+        document.getElementById('confirmationCard').style.display = 'none';
+    }
+
+    // Adiciona um evento de clique ao botão de confirmação
+    document.getElementById('confirmHomeButton').addEventListener('click', showConfirmationCard);
+
+    function confirmHome() {
+    window.location.href = "/inicio"; // Update to the correct URL ("/inicioyas" in this case)
+}
+</script>
+</body>
+</html>
